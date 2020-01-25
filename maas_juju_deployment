@@ -74,7 +74,7 @@ virsh net-destroy default
 virsh undefine default
 
 
-PATH1
+#PATH Create VM from .img file
 
 
 #download ubuntu img
@@ -155,7 +155,7 @@ sudo resize2fs /dev/sda1
 
 sudo reboot
 
-#install MAAS latest version or change to chose LTS
+#install MAAS latest version
 
 
 sudo apt-get dist-upgrade
@@ -197,8 +197,7 @@ sudo -u maas virsh -c qemu+ssh://john@10.10.1.126/system list --all  #ip of your
 
 #Install Juju client on server
 
-sudo add-apt-repository -u ppa:juju/stable
-sudo apt install juju
+sudo snap install juju --classic
 
 #create VM for Juju controller
 
