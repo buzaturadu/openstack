@@ -238,7 +238,9 @@ juju bootstrap --constraints tags=juju maas-cloud maas-controller
 
 #Create the model
 
-juju add-model openstack
+juju add-model mymass maas-cloud
+juju add-cloud maas-cloud maas-cloud.yaml --controller lxc-controller
+juju add-model openstack-maas maas-cloud
 
 
 
