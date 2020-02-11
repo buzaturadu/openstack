@@ -110,7 +110,7 @@ virsh domiflist maas & arp -n
 
 #configuring maas 
 
-sudo apt update && apt upgrade
+sudo apt update && sudo apt upgrade
 
 #config networks on maas VM
 
