@@ -159,6 +159,23 @@ ssh ubuntu@10.10.1.207
 
 sudo snap install juju --classic
 
+#the juju contraoller will stay in a lxd container so we recommend to instal lxd as snap package
+
+sudo snap install lxd
+
+sudo apt purge liblxc1 lxcfs lxd lxd-client
+
+#onfigure LXD for general use
+
+lxd init --auto
+
+#disable ipv6 for lxd container
+
+lxc network set lxdbr0 ipv6.address none
+
+#bootstrap controller in lxd
+
+juju bootstrap localhost lxd-controller
 
 #Adding in juju a mass cloud with .yaml file
 
@@ -186,10 +203,6 @@ juju add-cloud maas-cloud maas-cloud.yaml
 #add maas-cloud credentials
 
 juju add-credential maas-cloud -f maas-cloud.yaml
-
-#Bootstrap juju controler on juju VM
-
-juju bootstrap --constraints tags=juju maas-cloud maas-controller
 
 #Create the model
 
