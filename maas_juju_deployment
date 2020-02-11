@@ -73,62 +73,26 @@ virsh net-list
 virsh net-destroy default
 virsh undefine default
 
-
-#PATH Create VM from .img file
-
-
 #download ubuntu img
 
 wget http://releases.ubuntu.com/18.04.3/ubuntu-18.04.3-desktop-amd64.iso
 
-#create VM for MAAS
+#create vm for MAAS with interfaces in both bridges
 
 virt-install --name maas --ram 8000 --disk path=./vmdisk/maas.qcow2,size=10 --vcpus 1 --os-type linux --os-variant generic --network bridge=br0 --network bridge=br1 --graphics vnc --console pty,target_type=serial --cdrom '/home/matrix/ubuntu-18.04.3-live-server-amd64.iso'
 
-#install ubutnu
+#install ubutnu and check vm's ip.Let-s say it's 10.10.1.128. We used user ubuntu and password 12345678
 
-#check VM maas ip with mac corelation
-
-virsh domiflist maas & arp -n
-
-#connect to maas with VNC
-
-#configuring maas 
+#install updates 
 
 sudo apt update && sudo apt upgrade
 
-#config networks on maas VM
+#go back to server and copy you key to maas
 
-vim /etc/netplan/50-cloud-init.yaml
+ssh-copy-id ubuntu@10.10.1.128
 
-network:
-  ethernets:
-    ens3:
-      addresses: [ 10.10.1.128/24 ]
-      gateway4: 10.10.1.1 
-      nameservers:
-        addresses: [8.8.8.8, 8.8.4.4]     
-    ens4:        
-      addresses: [ 192.168.1.51/24 ] 
-
-
-netplan apply
-
-#exit and go back on server
-
-exit
-
-#generate ssh-key
-
-ssh-keygen
-
-#leave blank when asked for options
-#copy ssh key to MAAS vm
-
-ssh-copy-id root@10.10.1.128
 
 #install MAAS latest version
-
 
 sudo apt-get dist-upgrade
 sudo apt-get install openssh-server vlan
@@ -143,7 +107,7 @@ sudo dpkg-reconfigure maas-rack-controller
 
 http://10.10.1.128:5240/MAAS
 
-##setap maas-region-controller ith 192.168.1.51
+#setap maas-region-controller ith 192.168.1.51
 
 sudo dpkg-reconfigure maas-region-controller
 
@@ -153,12 +117,11 @@ sudo dpkg-reconfigure maas-region-controller
 
 sudo apt -y install libvirt-bin
 
-#create maas admin
+#start maas
 
 sudo maas init
 
-#username: admin password: 12345678 use your email and ssh key: leave blank
-
+#username: admin  password: 12345678 use your email and ssh key: leave blank
 
 #create maas user
 
@@ -168,7 +131,7 @@ sudo chsh -s /bin/bash maas
 sudo -u maas ssh-keygen
 sudo -u maas -i ssh-copy-id john@10.10.1.126
 
-#use your user john password. in this case "12345678"
+#use user john password. in this case "12345678"
 
 #check connection with KVM on server(it should list VM's)
 
@@ -177,6 +140,22 @@ sudo -u maas virsh -c qemu+ssh://john@10.10.1.126/system list --all  #ip of your
 #create VM for juju
 
 virt-install --name juju2 --memory 4048 --vcpus 1 --disk path=/home/matrix/vmdisk/juju2.qcow2,size=50 --network bridge=br1 --graphics vnc,listen=0.0.0.0 --pxe --noautoconsole --boot networ
+
+#install ubutnu and check vm's ip.Let-s say it's 10.10.1.207. We used user ubuntu and password 12345678
+
+#install updates 
+
+sudo apt update && sudo apt upgrade
+
+#go back to server and copy you key to maas
+
+ssh-copy-id ubuntu@10.10.1.207
+
+#ssh to juju vm
+
+ssh ubuntu@10.10.1.207
+
+#install juju
 
 sudo snap install juju --classic
 
