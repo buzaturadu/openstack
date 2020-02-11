@@ -3,7 +3,7 @@
 Loading   ]]]]]]]]]43%_______________
 
 
-asuming your user is john and your password is passwordid
+asuming your user is john and your password is 12345678
 
 
 # Install OS Ubuntu 18.04 on your server
@@ -137,17 +137,17 @@ sudo apt-get update
 
 sudo apt-get install maas maas-dns maas-dhcp maas-proxy -y
 
-#setap maas-rack-controller with http://192.168.1.51:5240/MAAS
+#setap maas-rack-controller with http://10.10.1.128:5240/MAAS
 
 sudo dpkg-reconfigure maas-rack-controller
 
-http://192.168.1.51:5240/MAAS
+http://10.10.1.128:5240/MAAS
 
-##setap maas-region-controller ith 10.10.1.128
+##setap maas-region-controller ith 192.168.1.51
 
 sudo dpkg-reconfigure maas-region-controller
 
-10.10.1.128
+192.168.1.51
 
 #install libvirt on maas 
 
@@ -161,7 +161,7 @@ sudo chsh -s /bin/bash maas
 sudo -u maas ssh-keygen
 sudo -u maas -i ssh-copy-id john@10.10.1.126
 
-#use your user john password. in this case "passwordid"
+#use your user john password. in this case "12345678"
 
 #check connection with KVM on server(it should list VM's)
 
