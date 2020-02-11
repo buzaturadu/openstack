@@ -78,29 +78,14 @@ virsh undefine default
 
 
 #download ubuntu img
-cd /var/lib/libvirt/images/
-wget https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img
 
-#customize image with username si password
-
-virt-customize -a /var/lib/libvirt/images/bionic-server-cloudimg-amd64.img -v --install cloud-init --mkdir /root/maas --root-password password:simplepass -x
-
-#install and convert ubuntu.img to qcow2
- 
-apt install libguestfs-tools
- 
-qemu-img convert -O qcow2 bionic-server-cloudimg-amd64.img bionic-server-cloudimg-amd64.qcow2
-
-
-mv bionic-server-cloudimg-amd64.qcow2 home/john/vmdisk/maas.qcow2
+wget http://releases.ubuntu.com/18.04.3/ubuntu-18.04.3-desktop-amd64.iso
 
 #create VM for MAAS
 
-virt-install --name maas --memory 8048 --vcpus 1 --disk path=/home/john/vmdisk/maas.qcow2,size=50 --network bridge=br0 --network bridge=br1 --graphics vnc,listen=0.0.0.0 --pxe --console pty,target_type=serial
+virt-install --name maas --ram 8000 --disk path=./vmdisk/maas.qcow2,size=10 --vcpus 1 --os-type linux --os-variant generic --network bridge=br0 --network bridge=br1 --graphics vnc --console pty,target_type=serial --cdrom '/home/matrix/ubuntu-18.04.3-live-server-amd64.iso'
 
-#resize maas.qcow image to 40G
-
-qemu-img resize maas.qcow2 +40G
+#install ubutnu
 
 #check VM maas ip with mac corelation
 
@@ -114,7 +99,7 @@ sudo apt update && sudo apt upgrade
 
 #config networks on maas VM
 
-vim /etc/netplan/50.yaml
+vim /etc/netplan/50-cloud-init.yaml
 
 network:
   ethernets:
@@ -129,10 +114,6 @@ network:
 
 netplan apply
 
-#config ssh-server
-
-dpkg-reconfigure openssh-server
-
 #exit and go back on server
 
 exit
@@ -145,15 +126,6 @@ ssh-keygen
 #copy ssh key to MAAS vm
 
 ssh-copy-id root@10.10.1.128
-
-# enter the password you chosed when you customized the maas.qcow2. In our case simplepass
-
-#resize the partition 
-
-sudo growpart /dev/sda 1 
-sudo resize2fs /dev/sda1
-
-sudo reboot
 
 #install MAAS latest version
 
