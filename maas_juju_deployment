@@ -177,6 +177,17 @@ lxc network set lxdbr0 ipv6.address none
 
 juju bootstrap localhost lxd-controller
 
+#use next command to find container ip 
+
+lxc network get lxdbr0 ipv4.address
+
+#in our example the ip is 10.91.23.48
+
+#go to http://10.10.1.128:5240/MAAS log in with admin and password 12345678 you perviously set and create a subnet derive from juju-controller ip
+
+#CIDR: 10.91.23.0/24
+#gateway ip 10.91.23.1
+
 #Adding in juju a mass cloud with .yaml file
 
 vim maas-cloud.yaml
@@ -206,9 +217,9 @@ juju add-credential maas-cloud -f maas-cloud.yaml
 
 #Create the model
 
-juju add-model mymass maas-cloud
-juju add-cloud maas-cloud maas-cloud.yaml --controller lxc-controller
 juju add-model openstack-maas maas-cloud
+
+
 
 
 
