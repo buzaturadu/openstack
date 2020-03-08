@@ -139,7 +139,7 @@ sudo -u maas virsh -c qemu+ssh://john@10.10.1.126/system list --all  #ip of your
 
 #create VM for juju
 
-virt-install --name juju --ram 16000 --disk path=./vmdisk/maas.qcow2,size=100 --vcpus 8 --os-type linux --os-variant generic --network bridge=br0 --network bridge=br1 --graphics vnc --console pty,target_type=serial --cdrom '/home/john/ubuntu-18.04.3-live-server-amd64.iso'
+virt-install --name juju --ram 16000 --disk path=./vmdisk/juju.qcow2,size=100 --vcpus 8 --os-type linux --os-variant generic --network bridge=br0 --network bridge=br1 --graphics vnc --console pty,target_type=serial --cdrom '/home/john/ubuntu-18.04.3-live-server-amd64.iso'
 
 #install ubutnu and check vm's ip.Let-s say it's 10.10.1.207. We used user ubuntu and password 12345678
 
