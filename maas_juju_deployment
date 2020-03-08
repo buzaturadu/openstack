@@ -79,7 +79,7 @@ wget http://releases.ubuntu.com/18.04.3/ubuntu-18.04.3-desktop-amd64.iso
 
 #create vm for MAAS with interfaces in both bridges
 
-virt-install --name maas --ram 8000 --disk path=./vmdisk/maas.qcow2,size=10 --vcpus 1 --os-type linux --os-variant generic --network bridge=br0 --network bridge=br1 --graphics vnc --console pty,target_type=serial --cdrom '/home/matrix/ubuntu-18.04.3-live-server-amd64.iso'
+virt-install --name maas --ram 16000 --disk path=./vmdisk/maas.qcow2,size=100 --vcpus 4 --os-type linux --os-variant generic --network bridge=br0 --network bridge=br1 --graphics vnc --console pty,target_type=serial --cdrom '/home/matrix/ubuntu-18.04.3-live-server-amd64.iso'
 
 #install ubutnu and check vm's ip.Let-s say it's 10.10.1.128. We used user ubuntu and password 12345678
 
@@ -139,7 +139,7 @@ sudo -u maas virsh -c qemu+ssh://john@10.10.1.126/system list --all  #ip of your
 
 #create VM for juju
 
-virt-install --name juju2 --memory 4048 --vcpus 1 --disk path=/home/matrix/vmdisk/juju2.qcow2,size=50 --network bridge=br1 --graphics vnc,listen=0.0.0.0 --pxe --noautoconsole --boot networ
+virt-install --name juju2 --memory 16048 --vcpus 8 --disk path=/home/matrix/vmdisk/juju2.qcow2,size=100 --network bridge=br1 --graphics vnc,listen=0.0.0.0 --pxe --noautoconsole --boot networ
 
 #install ubutnu and check vm's ip.Let-s say it's 10.10.1.207. We used user ubuntu and password 12345678
 
