@@ -1,2 +1,20 @@
+#create iptables config rc.local
+
+vim  /etc/rc.local
+
+#!/bin/sh -e
+/sbin/iptables -t nat -A POSTROUTING -o br0 -j MASQUERADE
+/sbin/iptables -A FORWARD -i br0 -o br1 -m state --state RELATED,ESTABLISHED -j ACCEPT
+/sbin/iptables -A FORWARD -i br1 -o br0 -j ACCEPT
+exit 0
+
+chmod +x rc.local
+
+./rc.local
+
+#check iptables config
+
+iptables -vnL
+
 check selinux
 
