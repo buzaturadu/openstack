@@ -198,6 +198,7 @@ Create VM
 
 	virt-customize -a /home/vms/dir.qcow2 --root-password password:redhat12
 
+	sudo virt-sysprep -a /home/vms/dir.qcow2 --ssh-inject centos:file:/root/.ssh/id_rsa.pub
 
 Start the VM
 
@@ -212,35 +213,22 @@ Login using root and redhat12
 #do not update the VM
 
 
-xfs_growfs  /dev/vda1
-
-
 virt console dir
 
-systemctl disable cloud-init; systemctl disable cloud-init-local; systemctl disable cloud-config;systemctl disable cloud-final
+	xfs_growfs  /dev/vda1
 
-
-if sshd status inactive you can try the following commands:
-ssh-heygen
-/usr/bin/ssh-keygen -A
-
-
-
-SERVER:~ # rpm -qf /usr/sbin/sshd
-openssh-7.2p2-74.16.3.x86_64
-SERVER:~ # rpm -V openssh-7.2p2-74.16.3.x86_64
-
-
-sudo virt-sysprep -a /home/vms/dir.qcow2 --ssh-inject centos:file:/root/.ssh/id_rsa.pub
 
 cp /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/ifcfg-eth1
-#systemctl disable cloud-init; systemctl disable cloud-init-local; systemctl disable cloud-config;systemctl disable cloud-final
-#ssh-heygen
-#/usr/bin/ssh-keygen -A
 
-#rpm -qf /usr/sbin/sshd
-#openssh-7.2p2-74.16.3.x86_64
-#rpm -V openssh-7.2p2-74.16.3.x86_64
+##Maybe
+systemctl disable cloud-init; systemctl disable cloud-init-local; systemctl disable cloud-config;systemctl disable cloud-final
+ssh-heygen
+/usr/bin/ssh-keygen -A
+rpm -qf /usr/sbin/sshd
+openssh-7.2p2-74.16.3.x86_64
+rpm -V openssh-7.2p2-74.16.3.x86_64
+
+
 
 Manage network
 
@@ -252,11 +240,10 @@ Change interface name th eth1
 
 	if up eth1
 
-#Disabling SELinux
+Disabling SELinux
+vi /etc/selinux/config  
+Set from Enforcing to Disabled
 
-#	vi /etc/selinux/config  
-
-#Set from Enforcing to Disabled
 
 Exit console and ssh to vm
 
