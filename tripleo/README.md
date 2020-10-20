@@ -49,6 +49,10 @@ create vm xml
 
 	vim vm.xml
 
+
+Paste the following config
+
+```
 <domain type='kvm'>
   <name>dir</name>
   <uuid>b7eef997-8db2-4a9b-81c0-d1619e14437a</uuid>
@@ -175,6 +179,8 @@ create vm xml
   <seclabel type='dynamic' model='selinux' relabel='yes'/>
   <seclabel type='dynamic' model='dac' relabel='yes'/>
 </domain>
+
+```
 
 
 Create folder for vm disk
