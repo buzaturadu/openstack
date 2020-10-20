@@ -198,7 +198,7 @@ Create VM
 
 	virt-customize -a /home/vms/dir.qcow2 --root-password password:redhat12
 
-	sudo virt-sysprep -a /home/vms/dir.qcow2 --ssh-inject centos:file:/root/.ssh/id_rsa.pub
+	sudo virt-sysprep -a /home/vms/dir.qcow2 --ssh-inject root:file:/root/.ssh/id_rsa.pub
 
 Start the VM
 
