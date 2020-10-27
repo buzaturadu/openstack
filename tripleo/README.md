@@ -1,4 +1,4 @@
-#Openstack deployement 
+# Openstack deployement 
 
 	sudo su -
 
