@@ -4,7 +4,7 @@
 
 	yum update
 
-	yum install -y qemu-kvm qemu-img virt-manager libvirt libvirt-python libvirt-client virt-install virt-viewer bridge-utils ibguestfs-tools wget vim
+	yum install -y qemu-kvm qemu-img virt-manager libvirt libvirt-python libvirt-client virt-install virt-viewer bridge-utils libguestfs-tools wget vim
  
 
 	systemctl start libvirtd
