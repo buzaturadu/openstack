@@ -1,6 +1,6 @@
 # Openstack deployement 
 
-	sudo su -
+	sudo su - 
 
 	yum update
 
